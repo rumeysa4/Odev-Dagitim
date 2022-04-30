@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2d450cbfdb614eeb9e1001ef84616f66" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="Database1Model.Ders" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Kayit" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Ogrenci" Width="1.5" PointX="5.375" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="Database1Model.FK_Kayit_ToDers" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Kayit_ToOgrenci" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Database1Model.Odev" Width="1.5" PointX="8.125" PointY="0.875" />
+        <AssociationConnector Association="Database1Model.FK_Kayit_ToOdev" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

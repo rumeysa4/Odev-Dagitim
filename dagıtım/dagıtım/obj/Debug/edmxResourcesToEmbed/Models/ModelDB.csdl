@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Ders">
+    <Key>
+      <PropertyRef Name="dersId" />
+    </Key>
+    <Property Name="dersId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dersKodu" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dersAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dersKredi" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_ToDers" FromRole="Ders" ToRole="Kayit" />
+  </EntityType>
+  <EntityType Name="Kayit">
+    <Key>
+      <PropertyRef Name="kayitId" />
+    </Key>
+    <Property Name="kayitId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="kayitDersId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="kayitOgrId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Ders" Relationship="Self.FK_Kayit_ToDers" FromRole="Kayit" ToRole="Ders" />
+    <NavigationProperty Name="Ogrenci" Relationship="Self.FK_Kayit_ToOgrenci" FromRole="Kayit" ToRole="Ogrenci" />
+    <Property Name="kayitOdevId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Odev" Relationship="Database1Model.FK_Kayit_ToOdev" FromRole="Kayit" ToRole="Odev" />
+  </EntityType>
+  <EntityType Name="Ogrenci">
+    <Key>
+      <PropertyRef Name="ogrId" />
+    </Key>
+    <Property Name="ogrId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ogrNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ogrAdsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ogrDogTarih" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_ToOgrenci" FromRole="Ogrenci" ToRole="Kayit" />
+    <Property Name="ogrFoto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_Kayit_ToDers">
+    <End Role="Ders" Type="Self.Ders" Multiplicity="1" />
+    <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ders">
+        <PropertyRef Name="dersId" />
+      </Principal>
+      <Dependent Role="Kayit">
+        <PropertyRef Name="kayitDersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Kayit_ToOgrenci">
+    <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+    <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ogrenci">
+        <PropertyRef Name="ogrId" />
+      </Principal>
+      <Dependent Role="Kayit">
+        <PropertyRef Name="kayitOgrId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Ders" EntityType="Self.Ders" />
+    <EntitySet Name="Kayit" EntityType="Self.Kayit" />
+    <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" />
+    <AssociationSet Name="FK_Kayit_ToDers" Association="Self.FK_Kayit_ToDers">
+      <End Role="Ders" EntitySet="Ders" />
+      <End Role="Kayit" EntitySet="Kayit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Kayit_ToOgrenci" Association="Self.FK_Kayit_ToOgrenci">
+      <End Role="Ogrenci" EntitySet="Ogrenci" />
+      <End Role="Kayit" EntitySet="Kayit" />
+    </AssociationSet>
+    <EntitySet Name="Odev" EntityType="Database1Model.Odev" />
+    <AssociationSet Name="FK_Kayit_ToOdev" Association="Database1Model.FK_Kayit_ToOdev">
+      <End EntitySet="Odev" Role="Odev" />
+      <End EntitySet="Kayit" Role="Kayit" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Odev">
+    <Key>
+      <PropertyRef Name="odevogrenciId" />
+    </Key>
+    <Property Name="odevogrenciId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="turkceId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="matematikId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="fenId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kayit" Relationship="Database1Model.FK_Kayit_ToOdev" FromRole="Odev" ToRole="Kayit" />
+  </EntityType>
+  <Association Name="FK_Kayit_ToOdev">
+    <End Type="Database1Model.Odev" Multiplicity="1" Role="Odev" />
+    <End Type="Database1Model.Kayit" Multiplicity="*" Role="Kayit" />
+    <ReferentialConstraint>
+      <Principal Role="Odev">
+        <PropertyRef Name="odevogrenciId" />
+      </Principal>
+      <Dependent Role="Kayit">
+        <PropertyRef Name="kayitOdevId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
